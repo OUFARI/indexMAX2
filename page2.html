@@ -58,10 +58,13 @@
       <p>الشيفرة النهائية ستظهر هنا...</p>
     </div>
   </div>
+  <div id="raw-code" style="display: none;">الشيفرة النهائية هنا</div>
   <script>
   // قراءة الشيفرة النهائية من Local Storage
   const finalCode = localStorage.getItem('finalCode') || 'لا توجد شيفرة نهائية.';
   document.querySelector('.code-block').innerText = finalCode;
+    const encodedResult = localStorage.getItem('encodedResult') || 'لا توجد شيفرة متاحة.';
+document.getElementById('raw-code').textContent = encodedResult;
   </script>
 </body>
 </html>
