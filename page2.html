@@ -58,5 +58,10 @@
       <p>الشيفرة النهائية ستظهر هنا...</p>
     </div>
   </div>
+  <script>
+  // قراءة الشيفرة النهائية من Local Storage
+  const finalCode = localStorage.getItem('finalCode') || 'لا توجد شيفرة نهائية.';
+  document.querySelector('.code-block').innerText = finalCode;
+  </script>
 </body>
 </html>
