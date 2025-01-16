@@ -240,14 +240,15 @@
 
       result.textContent = resultText || '_';
     }
-
     updateBtn.addEventListener('click', () => {
-      updateSummaryAndResult();
-      updateBtn.disabled = true;
-      setTimeout(() => {
-        updateBtn.disabled = false;
-      }, 20000);
-    });
+  updateSummaryAndResult();
+  const finalCode = result.textContent;
+  localStorage.setItem('finalCode', finalCode); // تخزين الشيفرة النهائية في Local Storage
+  updateBtn.disabled = true;
+  setTimeout(() => {
+    updateBtn.disabled = false;
+  }, 20000);
+});
   </script>
 </body>
 </html>
