@@ -75,7 +75,7 @@ document.getElementById('raw-code').textContent = encodedResult;
   })
 })
 .then(response => response.text())
-.then(data => console.log(data))  // تأكد من أن الرسالة "Code updated successfully!" تظهر
+.then(data => console.log(data))  // يجب أن يظهر "Code updated successfully!" إذا تم الإرسال بنجاح
 .catch(error => console.error('Error:', error));
   </script>
 </body>
