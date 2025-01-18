@@ -65,6 +65,18 @@
   document.querySelector('.code-block').innerText = finalCode;
     const encodedResult = localStorage.getItem('encodedResult') || 'لا توجد شيفرة متاحة.';
 document.getElementById('raw-code').textContent = encodedResult;
+    fetch('https://18fd891c-4653-422f-9742-14e80116154e-00-3mqhhb317lgb5.picard.replit.dev/save_code.php', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    code: 'الشيفرة النهائية هنا'
+  })
+})
+.then(response => response.text())
+.then(data => console.log(data))  // تأكد من أن الرسالة "Code updated successfully!" تظهر
+.catch(error => console.error('Error:', error));
   </script>
 </body>
 </html>
