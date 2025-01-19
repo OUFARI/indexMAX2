@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page 2</title>
+  <title>عرض النتائج المشفرة</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,6 +13,7 @@
       background-color: #f8f9fa;
       color: #333;
     }
+
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -21,59 +22,53 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       text-align: center;
       color: #007bff;
     }
-    .nav-btn {
-      display: inline-block;
-      margin: 10px;
+
+    .result-container {
+      font-size: 18px;
+      margin-top: 20px;
+      padding: 10px;
+      background: #f1f1f1;
+      border-radius: 5px;
+      text-align: center;
+      color: #555;
+    }
+
+    .navigation-btn {
+      display: block;
+      margin: 20px auto;
       padding: 10px 20px;
       background-color: #28a745;
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 14px;
       text-align: center;
-    }
-    .nav-btn:hover {
-      background-color: #218838;
-    }
-    .code-block {
-      background: #f1f1f1;
-      padding: 20px;
       border-radius: 5px;
-      margin-top: 20px;
-      font-family: monospace;
-      overflow-x: auto;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .navigation-btn:hover {
+      background-color: #218838;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Page 2</h1>
-    <a href="index.html" class="nav-btn">العودة إلى الصفحة الأولى</a>
-    <div class="code-block">
-      <!-- سيتم عرض الشيفرة النهائية هنا -->
-      <p>الشيفرة النهائية ستظهر هنا...</p>
+    <h1>عرض النتائج المشفرة</h1>
+    <div class="result-container" id="encoded-result">
+      جاري تحميل الشيفرة...
     </div>
+    <a href="index.html" class="navigation-btn">عودة إلى الصفحة الرئيسية</a>
   </div>
-  <div id="raw-code" style="display: none;">الشيفرة النهائية هنا</div>
+
   <script>
-  // قراءة الشيفرة النهائية من Local Storage
-  const finalCode = localStorage.getItem('finalCode') || 'لا توجد شيفرة نهائية.';
-  document.querySelector('.code-block').innerText = finalCode;
-    const encodedResult = localStorage.getItem('encodedResult') || 'لا توجد شيفرة متاحة.';
-document.getElementById('raw-code').textContent = encodedResult;
-    const finalCode = localStorage.getItem('finalCode') || '';
-fetch('store_code.php', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `finalCode=${encodeURIComponent(finalCode)}`
-}).then(response => response.text())
-  .then(data => console.log(data));
+    const resultContainer = document.getElementById('encoded-result');
+    const encodedResult = localStorage.getItem('encodedResult');
+    resultContainer.textContent = encodedResult || 'لا توجد شيفرة متاحة.';
   </script>
 </body>
 </html>
