@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Checkbox Selection with Encoding</title>
   <style>
-    /* نفس التنسيقات التي أرسلتها */
     body {
       font-family: Arial, sans-serif;
       line-height: 1.6;
@@ -13,6 +13,7 @@
       background-color: #f8f9fa;
       color: #333;
     }
+
     .container {
       max-width: 800px;
       margin: 0 auto;
@@ -21,28 +22,58 @@
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       text-align: center;
       color: #007bff;
     }
+
     .grid-container {
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 10px;
       margin-bottom: 20px;
     }
+
     .row {
       display: grid;
       grid-template-columns: repeat(5, 50px);
       gap: 10px;
       align-items: center;
     }
+
     .row-number {
       font-size: 20px;
       font-weight: bold;
       text-align: center;
       color: #007bff;
     }
+
+    .row label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .row label:hover {
+      border-color: #007bff;
+    }
+
+    .row input {
+      display: none;
+    }
+
+    .row input:checked + label {
+      background-color: #007bff;
+      color: #fff;
+    }
+
     .result {
       font-size: 18px;
       font-weight: bold;
@@ -51,6 +82,29 @@
       background: #f1f1f1;
       border-radius: 5px;
     }
+
+    .summary-container {
+      margin-top: 20px;
+    }
+
+    .summary-container label {
+      font-weight: bold;
+    }
+
+    .summary-container input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+    }
+
+    .summary-container input::placeholder {
+      color: #999;
+    }
+
     .update-btn {
       display: block;
       margin: 20px auto;
@@ -61,11 +115,14 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 16px;
+      transition: background-color 0.3s;
     }
+
     .update-btn:disabled {
       background-color: #ccc;
       cursor: not-allowed;
     }
+
   </style>
 </head>
 <body>
@@ -75,12 +132,19 @@
       <!-- الشبكة ستُنشأ ديناميكيًا هنا -->
     </div>
 
+    <div class="summary-container">
+      <label for="summary">تلخيص الإدخالات:</label>
+      <input type="text" id="summary" readonly placeholder="سيتم عرض الإدخالات هنا">
+    </div>
+
     <button id="update-btn" class="update-btn">تحديث الشيفرة</button>
     <div class="result" id="result">_</div>
-  </div>
+
+    </div>
 
   <script>
     const gridContainer = document.getElementById('grid-container');
+    const summaryInput = document.getElementById('summary');
     const result = document.getElementById('result');
     const updateBtn = document.getElementById('update-btn');
 
@@ -91,7 +155,8 @@
       "15": "___", "16": "___.", "17": "___..", "18": "___...",
       "19": "___....", "20": "____", "21": "____.", "22": "____..",
       "23": "____...", "24": "____....", "25": "_____",
-      "A": ".", "B": "..", "C": "...", "D": "....", "E": "....."
+      "A": ".", "B": "..", "C": "...", "D": "....", "E": ".....",
+      ":": "..", "_": "_"
     };
 
     for (let row = 1; row <= 25; row++) {
@@ -125,6 +190,7 @@
 
     function updateSummaryAndResult() {
       const rows = {};
+      const encodedResult = [];
 
       checkboxes.forEach(checkbox => {
         if (checkbox.checked) {
@@ -137,6 +203,12 @@
           rows[row] += value;
         }
       });
+
+      const summaryText = Object.entries(rows)
+        .map(([row, values]) => `[${row}]:${values.split(':')[1]}`)
+        .join('_');
+
+      summaryInput.value = summaryText;
 
       const resultText = Object.entries(rows)
         .map(([row, values]) => {
@@ -155,19 +227,10 @@
 
     updateBtn.addEventListener('click', () => {
       updateSummaryAndResult();
-      const finalCode = result.textContent;
-
-      // إرسال الشيفرة النهائية إلى PHP
-      fetch('save_code.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `finalCode=${encodeURIComponent(finalCode)}`
-      })
-      .then(response => response.text())
-      .then(data => alert(data))
-      .catch(error => console.error('Error:', error));
+      updateBtn.disabled = true;
+      setTimeout(() => {
+        updateBtn.disabled = false;
+      }, 20000);
     });
   </script>
 </body>
