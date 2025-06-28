@@ -1,381 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>تصحيح رخصة السياقة</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      direction: rtl;
+    }
 
-‎<!DOCTYPE html>
-‎<html lang="ar" dir="rtl">
-‎<head>
-‎  <meta charset="UTF-8" />
-‎  <title>تصحيح رخصة السياقة</title>
-‎  <style>
-‎    body {
-‎      font-family: 'Segoe UI', sans-serif;
-‎      background: linear-gradient(135deg, #e0f7fa, #ffffff);
-‎      margin: 0;
-‎      padding: 0;
-‎      text-align: center;
-‎      direction: rtl;
-‎    }
-‎
-‎    .container {
-‎      max-width: 500px;
-‎      margin: 40px auto;
-‎      padding: 20px;
-‎      background: white;
-‎      border-radius: 20px;
-‎      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-‎    }
-‎
-‎    .question-box {
-‎      font-size: 36px;
-‎      color: #0d47a1;
-‎      border: 3px solid #0d47a1;
-‎      border-radius: 12px;
-‎      padding: 10px 25px;
-‎      display: inline-block;
-‎      margin-bottom: 30px;
-‎      background-color: #e3f2fd;
-‎    }
-‎
-‎    .answers {
-‎      display: flex;
-‎      flex-direction: column;
-‎      gap: 15px;
-‎      margin-bottom: 30px;
-‎    }
-‎
-‎    .answer {
-‎      background: #e0f2f1;
-‎      color: #00695c;
-‎      padding: 12px;
-‎      border: 2px solid #00695c;
-‎      border-radius: 10px;
-‎      font-size: 20px;
-‎    }
-‎
-‎    .selected {
-‎      background: #a5d6a7;
-‎      border-color: #388e3c;
-‎      color: #1b5e20;
-‎    }
-‎
-‎    .controls {
-‎      display: flex;
-‎      justify-content: center;
-‎      gap: 15px;
-‎      margin-top: 10px;
-‎    }
-‎
-‎    .control-btn {
-‎      padding: 10px 18px;
-‎      font-size: 26px;
-‎      border: none;
-‎      border-radius: 10px;
-‎      cursor: pointer;
-‎      transition: 0.3s ease;
-‎    }
-‎
-‎    .arrow {
-‎      background: #bbdefb;
-‎      color: #0d47a1;
-‎    }
-‎
-‎    .arrow:hover {
-‎      background: #90caf9;
-‎    }
-‎
-‎    .submit {
-‎      background: #ffe0b2;
-‎      color: #ef6c00;
-‎    }
-‎
-‎    .submit:hover {
-‎      background: #ffcc80;
-‎    }
-‎
-‎    .review-controls {
-‎      display: flex;
-‎      justify-content: center;
-‎      gap: 20px;
-‎      margin-bottom: 10px;
-‎    }
-‎
-‎    .correct, .wrong {
-‎      width: 60px;
-‎      height: 60px;
-‎      font-size: 30px;
-‎      border-radius: 50%;
-‎      border: 4px solid;
-‎      cursor: pointer;
-‎    }
-‎
-‎    .correct {
-‎      background: #c8e6c9;
-‎      color: #2e7d32;
-‎      border-color: #388e3c;
-‎    }
-‎
-‎    .wrong {
-‎      background: #ffcdd2;
-‎      color: #b71c1c;
-‎      border-color: #d32f2f;
-‎    }
-‎
-‎    /* أنماط المرحلة الثالثة - عزل الأخطاء */
-‎    .isolation-mode {
-‎      display: none;
-‎      text-align: center;
-‎    }
-‎
-‎    .isolation-title {
-‎      font-size: 24px;
-‎      color: #d32f2f;
-‎      margin-bottom: 20px;
-‎    }
-‎
-‎    .wrong-questions-grid {
-‎      display: grid;
-‎      grid-template-columns: repeat(4, 1fr);
-‎      gap: 10px;
-‎      margin-bottom: 20px;
-‎    }
-‎
-‎    .wrong-question {
-‎      width: 60px;
-‎      height: 60px;
-‎      background: #ffcdd2;
-‎      color: #b71c1c;
-‎      border: 2px solid #d32f2f;
-‎      border-radius: 10px;
-‎      display: flex;
-‎      align-items: center;
-‎      justify-content: center;
-‎      font-size: 20px;
-‎      cursor: pointer;
-‎      transition: all 0.3s;
-‎    }
-‎
-‎    .wrong-question.selected {
-‎      background: #9e9e9e;
-‎      color: #616161;
-‎      border-color: #424242;
-‎    }
-‎
-‎    .restart-btn {
-‎      background: #64b5f6;
-‎      color: #0d47a1;
-‎      padding: 12px 24px;
-‎      border: none;
-‎      border-radius: 8px;
-‎      font-size: 18px;
-‎      cursor: pointer;
-‎      margin-top: 20px;
-‎    }
-‎
-‎    .restart-btn:hover {
-‎      background: #42a5f5;
-‎    }
-‎  </style>
-‎</head>
-‎<body>
-‎
-‎  <div class="container" id="mainContainer">
-‎    <div class="question-box" id="questionTitle">Q1</div>
-‎
-‎    <div class="answers" id="answers"></div>
-‎
-‎    <!-- تصحيح يظهر فقط في وضع التصحيح -->
-‎    <div class="review-controls" id="reviewButtons" style="display: none;">
-‎      <button class="correct" onclick="markCorrection(true)">&#x2714;</button>
-‎      <button class="wrong" onclick="markCorrection(false)">&#x2716;</button>
-‎    </div>
-‎
-‎    <!-- أزرار التنقل تظهر دائماً -->
-‎    <div class="controls">
-‎      <button class="control-btn arrow" onclick="prevQuestion()">&#x276E;</button>
-‎      <button class="control-btn submit" id="submitBtn" onclick="submitAnswer()">&#x2713;</button>
-‎      <button class="control-btn arrow" onclick="nextQuestion()">&#x276F;</button>
-‎    </div>
-‎  </div>
-‎
-‎  <!-- المرحلة الثالثة - عزل الأخطاء -->
-‎  <div class="container isolation-mode" id="isolationContainer">
-‎    <div class="isolation-title">اختر الأسئلة الخاطئة التي تريد عزلها</div>
-‎    <div class="wrong-questions-grid" id="wrongQuestionsGrid"></div>
-‎    <button class="restart-btn" onclick="restartQuiz()">الرجوع</button>
-‎  </div>
-‎
-‎  <script>
-‎    const totalQuestions = 40;
-‎    let currentQuestion = 1;
-‎    let mode = "quiz"; // أو "review" أو "isolation"
-‎    let selectedAnswers = {}; // تخزين الإجابات
-‎    let corrections = {}; // تخزين التصحيحات اليدوية
-‎    let wrongQuestions = []; // الأسئلة الخاطئة
-‎    let isolatedQuestions = []; // الأسئلة المعزولة
-‎
-‎    function updateQuestionDisplay() {
-‎      if (mode === "isolation") {
-‎        document.getElementById("mainContainer").style.display = "none";
-‎        document.getElementById("isolationContainer").style.display = "block";
-‎        return;
-‎      } else {
-‎        document.getElementById("mainContainer").style.display = "block";
-‎        document.getElementById("isolationContainer").style.display = "none";
-‎      }
-‎
-‎      document.getElementById("questionTitle").textContent = "Q" + currentQuestion;
-‎      const answersContainer = document.getElementById("answers");
-‎      answersContainer.innerHTML = "";
-‎
-‎      // عرض حسب الوضع الحالي
-‎      if (mode === "quiz") {
-‎        document.getElementById("reviewButtons").style.display = "none";
-‎        document.getElementById("submitBtn").style.display = "inline-block";
-‎
-‎        for (let i = 1; i <= 4; i++) {
-‎          const div = document.createElement("div");
-‎          div.className = "answer";
-‎          div.textContent = i;
-‎          if (
-‎            selectedAnswers[currentQuestion] &&
-‎            selectedAnswers[currentQuestion].includes(i)
-‎          ) {
-‎            div.classList.add("selected");
-‎          }
-‎          div.onclick = () => toggleAnswer(i);
-‎          answersContainer.appendChild(div);
-‎        }
-‎      } else if (mode === "review") {
-‎        document.getElementById("reviewButtons").style.display = "flex";
-‎        document.getElementById("submitBtn").style.display = "none";
-‎
-‎        const selected = selectedAnswers[currentQuestion] || [];
-‎        if (selected.length === 0) {
-‎          const div = document.createElement("div");
-‎          div.className = "answer";
-‎          div.textContent = "لم يتم اختيار أي جواب.";
-‎          answersContainer.appendChild(div);
-‎        } else {
-‎          selected.forEach(ans => {
-‎            const div = document.createElement("div");
-‎            div.className = "answer selected";
-‎            div.textContent = `الجواب: ${ans}`;
-‎            answersContainer.appendChild(div);
-‎          });
-‎        }
-‎      }
-‎    }
-‎
-‎    function toggleAnswer(answerNum) {
-‎      if (!selectedAnswers[currentQuestion]) {
-‎        selectedAnswers[currentQuestion] = [];
-‎      }
-‎
-‎      const index = selectedAnswers[currentQuestion].indexOf(answerNum);
-‎      if (index === -1) {
-‎        selectedAnswers[currentQuestion].push(answerNum);
-‎      } else {
-‎        selectedAnswers[currentQuestion].splice(index, 1);
-‎      }
-‎
-‎      updateQuestionDisplay();
-‎    }
-‎
-‎    function nextQuestion() {
-‎      if (currentQuestion < totalQuestions) {
-‎        currentQuestion++;
-‎        updateQuestionDisplay();
-‎      }
-‎    }
-‎
-‎    function prevQuestion() {
-‎      if (currentQuestion > 1) {
-‎        currentQuestion--;
-‎        updateQuestionDisplay();
-‎      }
-‎    }
-‎
-‎    function submitAnswer() {
-‎      if (currentQuestion === totalQuestions) {
-‎        if (mode === "quiz") {
-‎          mode = "review";
-‎          currentQuestion = 1;
-‎          updateQuestionDisplay();
-‎        } else if (mode === "review") {
-‎          prepareIsolationMode();
-‎        }
-‎      } else {
-‎        nextQuestion();
-‎      }
-‎    }
-‎
-‎    function markCorrection(isCorrect) {
-‎      corrections[currentQuestion] = isCorrect;
-‎      if (!isCorrect) {
-‎        wrongQuestions.push(currentQuestion);
-‎      }
-‎      
-‎      if (currentQuestion < totalQuestions) {
-‎        currentQuestion++;
-‎        updateQuestionDisplay();
-‎      } else {
-‎        prepareIsolationMode();
-‎      }
-‎    }
-‎
-‎    function prepareIsolationMode() {
-‎      mode = "isolation";
-‎      updateQuestionDisplay();
-‎      renderWrongQuestionsGrid();
-‎    }
-‎
-‎    function renderWrongQuestionsGrid() {
-‎      const grid = document.getElementById("wrongQuestionsGrid");
-‎      grid.innerHTML = "";
-‎      
-‎      wrongQuestions.forEach(qNum => {
-‎        const qElement = document.createElement("div");
-‎        qElement.className = "wrong-question";
-‎        qElement.textContent = qNum;
-‎        qElement.onclick = () => toggleIsolation(qNum);
-‎        grid.appendChild(qElement);
-‎      });
-‎    }
-‎
-‎    function toggleIsolation(qNum) {
-‎      const index = isolatedQuestions.indexOf(qNum);
-‎      if (index === -1) {
-‎        isolatedQuestions.push(qNum);
-‎      } else {
-‎        isolatedQuestions.splice(index, 1);
-‎      }
-‎      
-‎      // تحديث الواجهة
-‎      const allWrongQuestions = document.querySelectorAll(".wrong-question");
-‎      allWrongQuestions.forEach(el => {
-‎        const num = parseInt(el.textContent);
-‎        if (isolatedQuestions.includes(num)) {
-‎          el.classList.add("selected");
-‎        } else {
-‎          el.classList.remove("selected");
-‎        }
-‎      });
-‎    }
-‎
-‎    function restartQuiz() {
-‎      // إعادة تعيين جميع المتغيرات
-‎      currentQuestion = 1;
-‎      mode = "quiz";
-‎      selectedAnswers = {};
-‎      corrections = {};
-‎      wrongQuestions = [];
-‎      isolatedQuestions = [];
-‎      
-‎      // العودة إلى الوضع الأولي
-‎      updateQuestionDisplay();
-‎    }
-‎
-‎    updateQuestionDisplay();
-‎  </script>
-‎
-‎</body>
-‎</html>
-‎
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .question-box {
+      font-size: 36px;
+      color: #0d47a1;
+      border: 3px solid #0d47a1;
+      border-radius: 12px;
+      padding: 10px 25px;
+      display: inline-block;
+      margin-bottom: 30px;
+      background-color: #e3f2fd;
+    }
+
+    .answers {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .answer {
+      background: #e0f2f1;
+      color: #00695c;
+      padding: 12px;
+      border: 2px solid #00695c;
+      border-radius: 10px;
+      font-size: 20px;
+    }
+
+    .selected {
+      background: #a5d6a7;
+      border-color: #388e3c;
+      color: #1b5e20;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .control-btn {
+      padding: 10px 18px;
+      font-size: 26px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .arrow {
+      background: #bbdefb;
+      color: #0d47a1;
+    }
+
+    .arrow:hover {
+      background: #90caf9;
+    }
+
+    .submit {
+      background: #ffe0b2;
+      color: #ef6c00;
+    }
+
+    .submit:hover {
+      background: #ffcc80;
+    }
+
+    .review-controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+
+    .correct, .wrong {
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      border-radius: 50%;
+      border: 4px solid;
+      cursor: pointer;
+    }
+
+    .correct {
+      background: #c8e6c9;
+      color: #2e7d32;
+      border-color: #388e3c;
+    }
+
+    .wrong {
+      background: #ffcdd2;
+      color: #b71c1c;
+      border-color: #d32f2f;
+    }
+
+    /* أنماط المرحلة الثالثة - عزل الأخطاء */
+    .isolation-mode {
+      display: none;
+      text-align: center;
+    }
+
+    .isolation-title {
+      font-size: 24px;
+      color: #d32f2f;
+      margin-bottom: 20px;
+    }
+
+    .wrong-questions-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .wrong-question {
+      width: 60px;
+      height: 60px;
+      background: #ffcdd2;
+      color: #b71c1c;
+      border: 2px solid #d32f2f;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .wrong-question.selected {
+      background: #9e9e9e;
+      color: #616161;
+      border-color: #424242;
+    }
+
+    .restart-btn {
+      background: #64b5f6;
+      color: #0d47a1;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .restart-btn:hover {
+      background: #42a5f5;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="mainContainer">
+    <div class="question-box" id="questionTitle">Q1</div>
+
+    <div class="answers" id="answers"></div>
+
+    <!-- تصحيح يظهر فقط في وضع التصحيح -->
+    <div class="review-controls" id="reviewButtons" style="display: none;">
+      <button class="correct" onclick="markCorrection(true)">&#x2714;</button>
+      <button class="wrong" onclick="markCorrection(false)">&#x2716;</button>
+    </div>
+
+    <!-- أزرار التنقل تظهر دائماً -->
+    <div class="controls">
+      <button class="control-btn arrow" onclick="prevQuestion()">&#x276E;</button>
+      <button class="control-btn submit" id="submitBtn" onclick="submitAnswer()">&#x2713;</button>
+      <button class="control-btn arrow" onclick="nextQuestion()">&#x276F;</button>
+    </div>
+  </div>
+
+  <!-- المرحلة الثالثة - عزل الأخطاء -->
+  <div class="container isolation-mode" id="isolationContainer">
+    <div class="isolation-title">اختر الأسئلة الخاطئة التي تريد عزلها</div>
+    <div class="wrong-questions-grid" id="wrongQuestionsGrid"></div>
+    <button class="restart-btn" onclick="restartQuiz()">الرجوع</button>
+  </div>
+
+  <script>
+    const totalQuestions = 40;
+    let currentQuestion = 1;
+    let mode = "quiz"; // أو "review" أو "isolation"
+    let selectedAnswers = {}; // تخزين الإجابات
+    let corrections = {}; // تخزين التصحيحات اليدوية
+    let wrongQuestions = []; // الأسئلة الخاطئة
+    let isolatedQuestions = []; // الأسئلة المعزولة
+
+    function updateQuestionDisplay() {
+      if (mode === "isolation") {
+        document.getElementById("mainContainer").style.display = "none";
+        document.getElementById("isolationContainer").style.display = "block";
+        return;
+      } else {
+        document.getElementById("mainContainer").style.display = "block";
+        document.getElementById("isolationContainer").style.display = "none";
+      }
+
+      document.getElementById("questionTitle").textContent = "Q" + currentQuestion;
+      const answersContainer = document.getElementById("answers");
+      answersContainer.innerHTML = "";
+
+      // عرض حسب الوضع الحالي
+      if (mode === "quiz") {
+        document.getElementById("reviewButtons").style.display = "none";
+        document.getElementById("submitBtn").style.display = "inline-block";
+
+        for (let i = 1; i <= 4; i++) {
+          const div = document.createElement("div");
+          div.className = "answer";
+          div.textContent = i;
+          if (
+            selectedAnswers[currentQuestion] &&
+            selectedAnswers[currentQuestion].includes(i)
+          ) {
+            div.classList.add("selected");
+          }
+          div.onclick = () => toggleAnswer(i);
+          answersContainer.appendChild(div);
+        }
+      } else if (mode === "review") {
+        document.getElementById("reviewButtons").style.display = "flex";
+        document.getElementById("submitBtn").style.display = "none";
+
+        const selected = selectedAnswers[currentQuestion] || [];
+        if (selected.length === 0) {
+          const div = document.createElement("div");
+          div.className = "answer";
+          div.textContent = "لم يتم اختيار أي جواب.";
+          answersContainer.appendChild(div);
+        } else {
+          selected.forEach(ans => {
+            const div = document.createElement("div");
+            div.className = "answer selected";
+            div.textContent = `الجواب: ${ans}`;
+            answersContainer.appendChild(div);
+          });
+        }
+      }
+    }
+
+    function toggleAnswer(answerNum) {
+      if (!selectedAnswers[currentQuestion]) {
+        selectedAnswers[currentQuestion] = [];
+      }
+
+      const index = selectedAnswers[currentQuestion].indexOf(answerNum);
+      if (index === -1) {
+        selectedAnswers[currentQuestion].push(answerNum);
+      } else {
+        selectedAnswers[currentQuestion].splice(index, 1);
+      }
+
+      updateQuestionDisplay();
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        updateQuestionDisplay();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 1) {
+        currentQuestion--;
+        updateQuestionDisplay();
+      }
+    }
+
+    function submitAnswer() {
+      if (currentQuestion === totalQuestions) {
+        if (mode === "quiz") {
+          mode = "review";
+          currentQuestion = 1;
+          updateQuestionDisplay();
+        } else if (mode === "review") {
+          prepareIsolationMode();
+        }
+      } else {
+        nextQuestion();
+      }
+    }
+
+    function markCorrection(isCorrect) {
+      corrections[currentQuestion] = isCorrect;
+      if (!isCorrect) {
+        wrongQuestions.push(currentQuestion);
+      }
+      
+      if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        updateQuestionDisplay();
+      } else {
+        prepareIsolationMode();
+      }
+    }
+
+    function prepareIsolationMode() {
+      mode = "isolation";
+      updateQuestionDisplay();
+      renderWrongQuestionsGrid();
+    }
+
+    function renderWrongQuestionsGrid() {
+      const grid = document.getElementById("wrongQuestionsGrid");
+      grid.innerHTML = "";
+      
+      wrongQuestions.forEach(qNum => {
+        const qElement = document.createElement("div");
+        qElement.className = "wrong-question";
+        qElement.textContent = qNum;
+        qElement.onclick = () => toggleIsolation(qNum);
+        grid.appendChild(qElement);
+      });
+    }
+
+    function toggleIsolation(qNum) {
+      const index = isolatedQuestions.indexOf(qNum);
+      if (index === -1) {
+        isolatedQuestions.push(qNum);
+      } else {
+        isolatedQuestions.splice(index, 1);
+      }
+      
+      // تحديث الواجهة
+      const allWrongQuestions = document.querySelectorAll(".wrong-question");
+      allWrongQuestions.forEach(el => {
+        const num = parseInt(el.textContent);
+        if (isolatedQuestions.includes(num)) {
+          el.classList.add("selected");
+        } else {
+          el.classList.remove("selected");
+        }
+      });
+    }
+
+    function restartQuiz() {
+      // إعادة تعيين جميع المتغيرات
+      currentQuestion = 1;
+      mode = "quiz";
+      selectedAnswers = {};
+      corrections = {};
+      wrongQuestions = [];
+      isolatedQuestions = [];
+      
+      // العودة إلى الوضع الأولي
+      updateQuestionDisplay();
+    }
+
+    updateQuestionDisplay();
+  </script>
+
+</body>
+</html>
+
